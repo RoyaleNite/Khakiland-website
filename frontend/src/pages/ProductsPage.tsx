@@ -36,9 +36,12 @@ export function ProductsPage() {
   const loadCategories = async () => {
     try {
       const data = await productsAPI.getCategories();
+      console.log('🏷️  Categories loaded:', data.length, 'total');
+      console.log('   - Parent categories:', data.filter((c: Category) => !c.parent).length);
+      console.log('   - Subcategories:', data.filter((c: Category) => c.parent).length);
       setCategories(data);
     } catch (error) {
-      console.error('Failed to load categories:', error);
+      console.error('❌ Failed to load categories:', error);
       toast({
         variant: 'destructive',
         title: t.toast.error,
@@ -55,6 +58,7 @@ export function ProductsPage() {
       if (searchQuery) params.search = searchQuery;
 
       const data = await productsAPI.getProducts(params);
+      console.log('📦 Products loaded:', data.results.length, 'out of', data.count, 'total');
       setProducts(data.results);
 
       toast({
@@ -63,7 +67,7 @@ export function ProductsPage() {
         description: `${data.results.length} ${t.toast.productsFound}`,
       });
     } catch (error) {
-      console.error('Failed to load products:', error);
+      console.error('❌ Failed to load products:', error);
       toast({
         variant: 'destructive',
         title: t.toast.error,
@@ -129,7 +133,7 @@ export function ProductsPage() {
         </Box>
 
         {/* Filters Section */}
-        <div className="bg-white/80 dark:bg-[#3A3621]/80 backdrop-blur-sm rounded-2xl p-6 mb-8 shadow-xl border border-[#C2B280] dark:border-[#4B5320]">
+        <div className="bg-card/80 backdrop-blur-sm rounded-2xl p-6 mb-8 shadow-xl border border-[#C2B280] dark:border-[#4B5320]">
           <div className="flex items-center gap-2 mb-4">
             <Filter className="w-5 h-5 text-[#6B8E23] dark:text-[#9C9A73]" />
             <Typography variant="h6" className="!font-semibold !text-[#3B3A2E] dark:!text-[#E8E6D5]">
@@ -258,7 +262,7 @@ export function ProductsPage() {
             {filteredProducts.map((product) => (
               <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }} key={product.id}>
                 <Link to={`/products/${product.slug}`} className="block h-full">
-                  <Card className="h-full hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 !border-[#C2B280] dark:!border-[#4B5320] bg-white/90 dark:bg-[#3A3621]/90 backdrop-blur-sm group">
+                  <Card className="h-full hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 !border-[#C2B280] dark:!border-[#4B5320] bg-card/90 backdrop-blur-sm group">
                     <CardHeader className="p-0 relative">
                       <div
                         className="w-full aspect-square !bg-gradient-to-br from-[#F5F4ED] to-[#D2B48C] dark:from-[#3A3621] dark:to-[#2A2817] flex items-center justify-center overflow-hidden rounded-t-lg group-hover:scale-105 transition-transform duration-300"
@@ -301,7 +305,7 @@ export function ProductsPage() {
         )}
 
         {!isLoading && filteredProducts.length === 0 && (
-          <Box className="text-center py-12 bg-white/80 dark:bg-[#3A3621]/80 backdrop-blur-sm rounded-2xl border border-[#C2B280] dark:border-[#4B5320]">
+          <Box className="text-center py-12 bg-card/80 backdrop-blur-sm rounded-2xl border border-[#C2B280] dark:border-[#4B5320]">
             <Typography className="!text-black-600 dark:!text-black-400 text-lg">
               {t.products.noProductsFound}
             </Typography>

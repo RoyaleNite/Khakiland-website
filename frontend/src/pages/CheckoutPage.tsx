@@ -71,7 +71,7 @@ export function CheckoutPage() {
 
       <Grid container spacing={4}>
         <Grid size={{ xs: 12, lg: 8 }}>
-          <Card className="!border-[#C2B280] dark:!border-[#4B5320] !shadow-md bg-white/90 dark:bg-[#3A3621]/90 backdrop-blur-sm">
+          <Card className="!border-[#C2B280] dark:!border-[#4B5320] !shadow-md bg-card/90 backdrop-blur-sm">
             <CardHeader>
               <CardTitle className="!text-xl !text-[#3B3A2E] dark:!text-[#E8E6D5]">Shipping Information</CardTitle>
             </CardHeader>
@@ -225,7 +225,7 @@ export function CheckoutPage() {
         </Grid>
 
         <Grid size={{ xs: 12, lg: 4 }}>
-          <Card className="!border-[#C2B280] dark:!border-[#4B5320] !shadow-md lg:!sticky lg:!top-20 bg-white/90 dark:bg-[#3A3621]/90 backdrop-blur-sm">
+          <Card className="!border-[#C2B280] dark:!border-[#4B5320] !shadow-md lg:!sticky lg:!top-20 bg-card/90 backdrop-blur-sm">
             <CardHeader className="bg-gradient-to-r from-[#D2B48C]/30 to-[#C2B280]/30 dark:from-[#4B5320]/30 dark:to-[#6C541E]/30">
               <CardTitle className="!text-xl !text-[#3B3A2E] dark:!text-[#E8E6D5]">Order Summary</CardTitle>
             </CardHeader>

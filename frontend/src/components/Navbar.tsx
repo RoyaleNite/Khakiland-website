@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ShoppingCart, Sun, Moon, LogOut, Languages, UserCircle, Package2, LayoutDashboard, ClipboardList, Store, MapPin } from 'lucide-react';
+import { ShoppingCart, Sun, Moon, LogOut, Languages, UserCircle, Package2, LayoutDashboard, ClipboardList, Store, MapPin, FolderTree } from 'lucide-react';
 import { AppBar, Toolbar, Box, Container, IconButton, Menu, MenuItem } from '@mui/material';
 import { useState } from 'react';
 import { useAuthStore } from '../store/authStore';
@@ -100,6 +100,13 @@ export function Navbar() {
                     <Package2 className="h-4 w-4" />
                     Products
                   </Link>
+                  <Link
+                    to="/staff/categories"
+                    className="text-sm font-medium text-[#6B8E23] dark:text-[#9C9A73] hover:text-[#4B5320] dark:hover:text-[#C2B280] transition-colors flex items-center gap-1"
+                  >
+                    <FolderTree className="h-4 w-4" />
+                    Categories
+                  </Link>
                 </>
               )}
             </nav>
@@ -193,6 +200,15 @@ export function Navbar() {
                         >
                           <Package2 className="h-4 w-4 mr-2" />
                           Products
+                        </MenuItem>
+                        <MenuItem
+                          component={Link}
+                          to="/staff/categories"
+                          onClick={() => setUserMenuAnchor(null)}
+                          className="!text-[#6B8E23] dark:!text-[#9C9A73]"
+                        >
+                          <FolderTree className="h-4 w-4 mr-2" />
+                          Categories
                         </MenuItem>
                       </>
                     )}

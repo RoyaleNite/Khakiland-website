@@ -17,6 +17,29 @@ class CategoryListView(generics.ListAPIView):
     serializer_class = CategorySerializer
 
 
+# Staff-only category management views
+class StaffCategoryListView(generics.ListAPIView):
+    """List all categories for staff"""
+    permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+
+
+class StaffCategoryCreateView(generics.CreateAPIView):
+    """Create a new category (staff only)"""
+    permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+
+
+class StaffCategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
+    """Get, update, or delete a category (staff only)"""
+    permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    lookup_field = 'pk'
+
+
 class ProductListView(generics.ListAPIView):
     queryset = Product.objects.filter(is_active=True).select_related('category').prefetch_related('variants')
     serializer_class = ProductListSerializer

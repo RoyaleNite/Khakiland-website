@@ -109,7 +109,7 @@ export function ProductDetailPage() {
 
         <Grid container spacing={4}>
           <Grid size={{ xs: 12, md: 6 }}>
-            <Card className="!border-[#C2B280] dark:!border-[#4B5320] !shadow-lg bg-white/90 dark:bg-[#3A3621]/90 backdrop-blur-sm">
+            <Card className="!border-[#C2B280] dark:!border-[#4B5320] !shadow-lg bg-card/90 backdrop-blur-sm">
               <CardContent className="p-0">
                 <div
                   className="w-full aspect-square bg-gradient-to-br from-[#F5F4ED] to-[#D2B48C] dark:from-[#3A3621] dark:to-[#2A2817] flex items-center justify-center"

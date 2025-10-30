@@ -3,6 +3,9 @@ from .views import (
     CategoryListView,
     ProductListView,
     ProductDetailView,
+    StaffCategoryListView,
+    StaffCategoryCreateView,
+    StaffCategoryDetailView,
     StaffProductListView,
     StaffProductCreateView,
     StaffProductDetailView,
@@ -14,6 +17,11 @@ urlpatterns = [
     # Public endpoints
     path('categories/', CategoryListView.as_view(), name='category-list'),
     path('', ProductListView.as_view(), name='product-list'),
+
+    # Staff endpoints for category management
+    path('staff/categories/', StaffCategoryListView.as_view(), name='staff-category-list'),
+    path('staff/categories/create/', StaffCategoryCreateView.as_view(), name='staff-category-create'),
+    path('staff/categories/<int:pk>/', StaffCategoryDetailView.as_view(), name='staff-category-detail'),
 
     # Staff endpoints for product management
     path('staff/products/', StaffProductListView.as_view(), name='staff-product-list'),

@@ -22,6 +22,7 @@ import { StaffDashboard } from './pages/staff/Dashboard';
 import { StaffOrdersPage } from './pages/staff/OrdersPage';
 import { StaffInventoryPage } from './pages/staff/InventoryPage';
 import { ProductManagementPage } from './pages/staff/ProductManagementPage';
+import { CategoryManagementPage } from './pages/staff/CategoryManagementPage';
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { isAuthenticated, isLoading } = useAuthStore();
@@ -152,6 +153,14 @@ function App() {
             element={
               <StaffRoute>
                 <ProductManagementPage />
+              </StaffRoute>
+            }
+          />
+          <Route
+            path="/staff/categories"
+            element={
+              <StaffRoute>
+                <CategoryManagementPage />
               </StaffRoute>
             }
           />

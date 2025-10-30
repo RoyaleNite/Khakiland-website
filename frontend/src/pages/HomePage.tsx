@@ -30,9 +30,12 @@ export function HomePage() {
   const loadCategories = async () => {
     try {
       const data = await productsAPI.getCategories();
+      console.log('🏷️  Categories loaded:', data.length, 'total');
+      console.log('   - Parent categories:', data.filter((c: Category) => !c.parent).length);
+      console.log('   - Subcategories:', data.filter((c: Category) => c.parent).length);
       setCategories(data);
     } catch (error) {
-      console.error('Failed to load categories:', error);
+      console.error('❌ Failed to load categories:', error);
     }
   };
 
@@ -44,9 +47,10 @@ export function HomePage() {
       if (searchQuery) params.search = searchQuery;
 
       const data = await productsAPI.getProducts(params);
+      console.log('📦 Products loaded:', data.results.length, 'out of', data.count, 'total');
       setProducts(data.results);
     } catch (error) {
-      console.error('Failed to load products:', error);
+      console.error('❌ Failed to load products:', error);
     } finally {
       setIsLoading(false);
     }
@@ -89,28 +93,28 @@ export function HomePage() {
       {/* Features Section */}
       <Container maxWidth="xl" className="py-16 px-4 md:px-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-          <div className="bg-white/80 dark:bg-[#3A3621]/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-[#C2B280] dark:border-[#4B5320] hover:shadow-xl transition-all duration-300">
+          <div className="bg-card/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-[#C2B280] dark:border-[#4B5320] hover:shadow-xl transition-all duration-300">
             <div className="w-12 h-12 bg-gradient-to-br from-[#6B8E23] to-[#8B7D3A] rounded-full flex items-center justify-center mb-4">
-              <Check className="w-6 h-6 text-white" />
+              <Check className="w-6 h-6 text-primary-foreground" />
             </div>
-            <h3 className="text-xl font-bold text-[#3B3A2E] dark:text-[#E8E6D5] mb-2">{t.home.qualityTitle}</h3>
-            <p className="text-black-600 dark:text-black-400">{t.home.qualityDesc}</p>
+            <h3 className="text-xl font-bold text-card-foreground mb-2">{t.home.qualityTitle}</h3>
+            <p className="text-muted-foreground">{t.home.qualityDesc}</p>
           </div>
 
-          <div className="bg-white/80 dark:bg-[#3A3621]/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-[#C2B280] dark:border-[#4B5320] hover:shadow-xl transition-all duration-300">
+          <div className="bg-card/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-[#C2B280] dark:border-[#4B5320] hover:shadow-xl transition-all duration-300">
             <div className="w-12 h-12 bg-gradient-to-br from-[#6B8E23] to-[#8B7D3A] rounded-full flex items-center justify-center mb-4">
-              <Zap className="w-6 h-6 text-white" />
+              <Zap className="w-6 h-6 text-primary-foreground" />
             </div>
-            <h3 className="text-xl font-bold text-[#3B3A2E] dark:text-[#E8E6D5] mb-2">{t.home.shippingTitle}</h3>
-            <p className="text-black-600 dark:text-black-400">{t.home.shippingDesc}</p>
+            <h3 className="text-xl font-bold text-card-foreground mb-2">{t.home.shippingTitle}</h3>
+            <p className="text-muted-foreground">{t.home.shippingDesc}</p>
           </div>
 
-          <div className="bg-white/80 dark:bg-[#3A3621]/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-[#C2B280] dark:border-[#4B5320] hover:shadow-xl transition-all duration-300">
+          <div className="bg-card/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-[#C2B280] dark:border-[#4B5320] hover:shadow-xl transition-all duration-300">
             <div className="w-12 h-12 bg-gradient-to-br from-[#6B8E23] to-[#8B7D3A] rounded-full flex items-center justify-center mb-4">
-              <DollarSign className="w-6 h-6 text-white" />
+              <DollarSign className="w-6 h-6 text-primary-foreground" />
             </div>
-            <h3 className="text-xl font-bold text-[#3B3A2E] dark:text-[#E8E6D5] mb-2">{t.home.priceTitle}</h3>
-            <p className="text-black-600 dark:text-black-400">{t.home.priceDesc}</p>
+            <h3 className="text-xl font-bold text-card-foreground mb-2">{t.home.priceTitle}</h3>
+            <p className="text-muted-foreground">{t.home.priceDesc}</p>
           </div>
         </div>
 
@@ -140,15 +144,31 @@ export function HomePage() {
           >
             {t.home.allProducts}
           </Button>
-          {Array.isArray(categories) && categories.map((cat) => (
-            <Button
-              key={cat.id}
-              variant={selectedCategory === cat.id.toString() ? 'default' : 'outline'}
-              onClick={() => setSelectedCategory(cat.id.toString())}
-              className="!rounded-full"
-            >
-              {cat.name}
-            </Button>
+          {Array.isArray(categories) && categories.filter(cat => !cat.parent).map((parentCat) => (
+            <Box key={parentCat.id} className="flex flex-wrap gap-2 items-center">
+              <Button
+                variant={selectedCategory === parentCat.id.toString() ? 'default' : 'outline'}
+                onClick={() => setSelectedCategory(parentCat.id.toString())}
+                className="!rounded-full !font-semibold"
+              >
+                {parentCat.name}
+              </Button>
+              {parentCat.subcategories && parentCat.subcategories.length > 0 && (
+                <>
+                  {parentCat.subcategories.map((subcat) => (
+                    <Button
+                      key={subcat.id}
+                      variant={selectedCategory === subcat.id.toString() ? 'default' : 'outline'}
+                      onClick={() => setSelectedCategory(subcat.id.toString())}
+                      className="!rounded-full !ml-1"
+                      size="sm"
+                    >
+                      {subcat.name}
+                    </Button>
+                  ))}
+                </>
+              )}
+            </Box>
           ))}
         </Box>
       </Box>
@@ -164,7 +184,7 @@ export function HomePage() {
             <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }} key={product.id}>
               <Link to={`/products/${product.slug}`} className="block h-full">
                 <Card
-                  className="h-full hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 !border-[#C2B280] dark:!border-[#4B5320] bg-white/90 dark:bg-[#3A3621]/90 backdrop-blur-sm group"
+                  className="h-full hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 !border-[#C2B280] dark:!border-[#4B5320] bg-card/90 backdrop-blur-sm group"
                   style={{ animationDelay: `${index * 50}ms` }}
                 >
                   <CardHeader className="p-0 relative overflow-hidden">
@@ -200,7 +220,7 @@ export function HomePage() {
       )}
 
       {!isLoading && Array.isArray(products) && products.length === 0 && (
-        <Box className="text-center py-12 bg-white/80 dark:bg-[#3A3621]/80 backdrop-blur-sm rounded-2xl">
+        <Box className="text-center py-12 bg-card/80 backdrop-blur-sm rounded-2xl">
           <Typography className="text-muted-foreground text-lg">
             {t.home.noProducts}
           </Typography>

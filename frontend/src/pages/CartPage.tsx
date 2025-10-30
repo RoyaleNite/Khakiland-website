@@ -69,7 +69,7 @@ export function CartPage() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-[#F5F4ED] via-[#E8E6D5] to-[#D2B48C] dark:from-[#2A2817] dark:via-[#3A3621] dark:to-[#2A2817]">
         <Container maxWidth="xl" className="py-16">
-          <Card className="max-w-md mx-auto text-center !border-[#C2B280] dark:!border-[#4B5320] bg-white/80 dark:bg-[#3A3621]/80 backdrop-blur-sm">
+          <Card className="max-w-md mx-auto text-center !border-[#C2B280] dark:!border-[#4B5320] bg-card/80 backdrop-blur-sm">
             <CardContent className="pt-8 pb-8">
               <ShoppingBag className="h-20 w-20 mx-auto mb-4 text-[#6B8E23] dark:text-[#9C9A73]" />
               <Typography variant="h4" className="font-bold mb-2 !text-[#3B3A2E] dark:!text-[#E8E6D5]">{t.cart.empty}</Typography>
@@ -102,7 +102,7 @@ export function CartPage() {
           <Grid size={{ xs: 12, lg: 8 }}>
             <Box className="space-y-4">
               {cart.items.map((item) => (
-                <Card key={item.id} className="!border-[#C2B280] dark:!border-[#4B5320] !shadow-lg bg-white/90 dark:bg-[#3A3621]/90 backdrop-blur-sm hover:shadow-xl transition-shadow">
+                <Card key={item.id} className="!border-[#C2B280] dark:!border-[#4B5320] !shadow-lg bg-card/90 backdrop-blur-sm hover:shadow-xl transition-shadow">
                   <CardContent className="p-6">
                     <Box className="flex gap-4 flex-col sm:flex-row">
                       <div
@@ -177,7 +177,7 @@ export function CartPage() {
           </Grid>
 
           <Grid size={{ xs: 12, lg: 4 }}>
-            <Card className="sticky top-20 !border-[#C2B280] dark:!border-[#4B5320] bg-white/90 dark:bg-[#3A3621]/90 backdrop-blur-sm shadow-xl">
+            <Card className="sticky top-20 !border-[#C2B280] dark:!border-[#4B5320] bg-card/90 backdrop-blur-sm shadow-xl">
               <CardHeader className="bg-gradient-to-r from-[#D2B48C]/30 to-[#C2B280]/30 dark:from-[#4B5320]/30 dark:to-[#6C541E]/30">
                 <CardTitle className="!text-[#3B3A2E] dark:!text-[#E8E6D5]">Bestellingoverzicht</CardTitle>
               </CardHeader>
